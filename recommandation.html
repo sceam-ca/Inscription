@@ -339,6 +339,27 @@ button[type=submit]:disabled { opacity: 0.6; cursor: wait; }
   .partenaires .logo-sceam { height: 48px !important; }
 }
 
+.etapes-decl { display: grid; gap: 10px; margin-bottom: 16px; }
+.etape-decl { display: flex; gap: 12px; align-items: flex-start; font-size: 0.93rem; }
+.num-petit {
+  width: 24px; height: 24px; border-radius: 50%;
+  background: var(--accent-pale); color: var(--primaire);
+  font-weight: 700; font-size: 0.8rem;
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.bouton-telecharger {
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-bottom: 18px; padding: 12px 18px;
+  border: 1.5px solid var(--primaire); border-radius: 10px;
+  background: #fff; color: var(--primaire);
+  font: inherit; font-weight: 600; cursor: pointer;
+  transition: background .2s;
+}
+.bouton-telecharger:hover { background: var(--accent-pale); }
+.boutons-decl { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 18px; }
+.boutons-decl .bouton-telecharger { margin-bottom: 0; }
+.bouton-telecharger.secondaire { border-color: var(--bord); color: var(--texte); font-weight: 500; }
+
 </style>
 </head>
 <body>
@@ -355,7 +376,7 @@ button[type=submit]:disabled { opacity: 0.6; cursor: wait; }
     <div class="entete">
       <div class="etiquette">Lettre de recommandation</div>
       <h1>Dépôt d'une lettre de recommandation</h1>
-      <p>Réservé aux auteurs de lettres pour un candidat à la formation SCEAM-CA.</p>
+      <p>Master régional de modélisation appliquée en santé globale – M1, cohorte 1 (projet SCEAM-CA).<br>Réservé aux auteurs de lettres de recommandation.</p>
       <div class="cloture">Dépôt possible jusqu'au : <strong id="date-limite"></strong></div>
     </div>
 
@@ -373,7 +394,7 @@ button[type=submit]:disabled { opacity: 0.6; cursor: wait; }
         <div class="grille">
           <div class="champ">
             <label for="dossier">Numéro de dossier du candidat <span class="req">*</span></label>
-            <input type="text" id="dossier" name="dossier" required placeholder="CAND-2026-0001" autocomplete="off">
+            <input type="text" id="dossier" name="dossier" required placeholder="SCEAM-2026-0001" autocomplete="off">
             <div class="msg-erreur">Veuillez saisir le numéro de dossier.</div>
           </div>
           <div class="champ">
@@ -385,7 +406,7 @@ button[type=submit]:disabled { opacity: 0.6; cursor: wait; }
         <div class="champ">
           <label>Type de recommandation <span class="req">*</span></label>
           <div class="choix">
-            <label><input type="radio" name="piece" value="reco_ministere" required> Ministère de la Santé du pays d'origine</label>
+            <label><input type="radio" name="piece" value="reco_ministere" required> Ministère de la Santé du pays d'origine du candidat</label>
             <label><input type="radio" name="piece" value="reco_academique"> Responsable académique ou professionnel</label>
           </div>
           <div class="msg-erreur">Veuillez choisir le type de recommandation.</div>
@@ -445,7 +466,8 @@ button[type=submit]:disabled { opacity: 0.6; cursor: wait; }
     </div>
 
     <footer class="pied">
-      INOHA – Université de Kinshasa · Projet SCEAM-CA, financé par Global Health EDCTP3 et cofinancé par l'Union européenne.
+      Institut One Health pour l'Afrique (INOHA) – Université de Kinshasa · Contact : <a href="mailto:secretariat@unikin.inoha.ac.cd">secretariat@unikin.inoha.ac.cd</a><br>
+      Le projet SCEAM-CA est cofinancé par le partenariat Global Health EDCTP3, soutenu par l'Union européenne (Grant Agreement n° 101249016).
     </footer>
   </div>
 </div>
@@ -462,14 +484,13 @@ button[type=submit]:disabled { opacity: 0.6; cursor: wait; }
 // ====================== À PERSONNALISER ======================
 const CONFIG = {
   URL_SCRIPT: 'COLLE_ICI_L_URL_DU_SCRIPT',          // même URL que dans index.html
-  DATE_CLOTURE: '2026-12-31T23:59:00+01:00',        // même date que dans Code.gs
-  JOURS_RECO: 7,
+  DATE_LIMITE_RECO: '2026-12-24T23:59:00+01:00',    // même date que dans Code.gs
   MAX_MO: 10
 };
 // =============================================================
 
 const form = document.getElementById('formulaire');
-const limite = new Date(new Date(CONFIG.DATE_CLOTURE).getTime() + CONFIG.JOURS_RECO * 86400000);
+const limite = new Date(CONFIG.DATE_LIMITE_RECO);
 document.getElementById('date-limite').textContent = limite.toLocaleDateString('fr-FR',
   { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Africa/Kinshasa' });
 if (new Date() > limite) { form.hidden = true; document.getElementById('ferme').hidden = false; }
