@@ -693,7 +693,7 @@ const DECLARATION_DOCX = 'UEsDBBQABgAIAAAAIQDnIQddcAEAANcFAAATAAgCW0NvbnRlbnRfVH
 <script>
 // ====================== À PERSONNALISER ======================
 const CONFIG = {
-  URL_SCRIPT: 'https://script.google.com/macros/s/AKfycbyJXYUrz2PFmFoUKU7Naag8M3nDrxqQXuOkRwLm0qMe3nddSNzuBhY3MFMOgk0WNdA7ug/exec',          // URL de l'application Web Google (se termine par /exec)
+  URL_SCRIPT: 'https://script.google.com/macros/s/AKfycbzW6dc6WPsE8gKsUJ0L2fKORKWwx7eOtyLus5vhNer5L5tlZ6LtNULRdw0377lWhwTBVg/exec',          // URL de l'application Web Google (se termine par /exec)
   DATE_CLOTURE: '2026-12-17T10:00:00+01:00',        // même date que dans Code.gs
   DATE_LIMITE_RECO: '2026-12-24T23:59:00+01:00',    // lettres de recommandation tardives
   MAX_MO: 10
@@ -956,6 +956,7 @@ form.addEventListener('submit', async e => {
   const d = {};
   new FormData(form).forEach((v, k) => { if (typeof v === 'string') d[k] = v.trim(); });
   delete d.email2;
+  d.signature = d.prenom + ' ' + d.nom + ' (déclaration signée jointe en PDF)';
   if (form.situation.value !== 'En activité') { d.poste = ''; d.employeur = ''; d.typeStructure = ''; delete fichiers.attestation; }
   if (form.domaine.value !== 'Discipline apparentée') d.domaineAutre = '';
 
